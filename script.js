@@ -144,7 +144,7 @@ function sortTracks() {
     points += Math.log2(tracks[i].user.profile.followersCount + 1) // user followers
     points += tracks[i].user.leagueNr / 3
     if (tracks[i].leaderboard.length > 0) {
-      points += Math.log2(tracks[i].data.trackPieces.length / tracks[i].leaderboard[0].time)
+      points += Math.log2(tracks[i].data.trackPieces.length / tracks[i].leaderboard[0].time) // track pieces/length (deco amount)
     }
     points -= Math.log2(i / 50 + 2); // subtract points from older tracks
     tracks[i].points = points;

@@ -1,5 +1,6 @@
 let tracks = [];
 let loopcounter = 0;
+let page = 0
 
 function getTracks() {
   var fetches = [];
@@ -151,10 +152,33 @@ function sortTracks() {
   tracks.sort(function(a, b) {
     return b.points - a.points;
   })
-  trackhtml = document.getElementById("tracks")
-  for (let i = 0; i < tracks.length && i < 500; i++) {
-    trackhtml.innerHTML += "<br><a href='https://dashcraft.io/?t=" + tracks[i]._id + "' target='_blank'>" + tracks[i].user.username + "</a> " + tracks[i].verified
+  
+  showPage(0)
+}
+
+function showPage(page) {
+var trackshtml = document.getElementById("tracks")
+  trackshtml.innerHTML = "";
+  for (let i = page*15; i < tracks.length && i < page*15+15; i++) {
+    trackshtml.innerHTML += (i+1) + ". <a href='https://dashcraft.io/?t=" + tracks[i]._id + "' target='_blank'>" + tracks[i].user.username + "'s</a> " 
+      if (tracks[i].verified) {
+        trackshtml.innerHTML += "(verified)<br>"
+      } else {
+        trackshtml.innerHTML += "(unverified)<br>"
+      }
   }
-  trackhtml.innerHTML += "<br><a href='https://dashcraft.io/?t=" + tracks[tracks.length-1]._id + "' target='_blank'>" + tracks[tracks.length-1].user.username + "</a> " + tracks[tracks.length-1].verified
-  console.log(tracks)
+}
+
+function pageLeft() {
+  if (page > 0) {
+    page -= 1;
+    showPage(page)
+  }
+}
+
+function pageRight() {
+  if (page < Math.floor(tracks.length/15)) {
+    page += 1;
+    showPage(page)
+  }
 }
